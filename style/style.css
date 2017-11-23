@@ -1,0 +1,52 @@
+.header {
+    margin:0 10% 0 10%;
+    border-bottom:2px solid black;
+    text-align:right;
+    padding:50px 50px 12px 50px ;
+    width:80%;
+    box-sizing:border-box;
+}
+
+a {
+    text-decoration:none;
+    color:black;
+}
+.header a {
+    border-bottom:2px solid transparent;
+    font-size:18px;
+}
+.header a:hover {
+    border-bottom:2px solid red;
+    transition:1s all;
+
+}
+
+.container {
+    margin:20px 10% 0 10%; 
+    border:2px solid black;
+    box-sizing: border-box;
+    width:80%;
+    display: flex;
+    padding:30px 0;
+    justify-content: space-between;
+}
+.container img{
+    
+    width:20%;
+    
+    min-height:300px;
+}
+
+.footer {
+    margin:20px 10% 0 10%; 
+    border:2px solid black;
+    padding:100px;
+    box-sizing: border-box;
+    width:80%;
+}
+
+.clear:after{
+    content:"";
+    clear:both;
+    display:block;
+}
