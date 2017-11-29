@@ -1,63 +1,38 @@
-.header {
-    border-color: transparent transparent black transparent;
-    border-bottom:2px solid black;
-    text-align:right;
-    padding:50px 50px 12px 50px ;
-    box-sizing:border-box;
-}
-.header, .jumbotron,.footer{
-    margin-top:20px;
-}
-a {
-    text-decoration:none !important;
+a{
+    text-decoration: none !important;
     color:black !important;
+    transition:all 0.3s linear;
+    border:1px solid transparent;
 }
-.header a {
-    border-bottom:2px solid transparent;
-    font-size:18px;
-}
+
 .header a:hover {
-    border-bottom:2px solid red;
-    transition:1s all;
-
+    border-bottom:1px solid red;
 }
-
-
-
-.container img{
-    width:100%;
+.header a{
+    float:right;
 }
-
-.footer {
-    border:2px solid black;
-    padding:100px;
-    box-sizing: border-box;
+.blog{
+    padding:10px 8%;
+}
+.post-thumbnail{
+    margin-bottom: 20px;
+}
+.post{
     margin-bottom:20px;
+}
+.header {
+    padding:20px;
+    border:2px solid black;
+    border-top-color: transparent;
+    margin:auto 8%;
+}
+
+.continue:hover {
+    color:white !important;
 }
 
 .clear:after{
-    content:"";
-    clear:both;
     display:block;
-}
-.jumbotron {
-    border: 2px solid black;
-}
-
-
-.contact > div:first-child{
-    border-right:2px solid black;
-}
-.contact > div:last-child{
-    margin:auto 10px;
-}
-
-.contact > div:last-child table tr td:first-child {
-    text-align:center;
-    vertical-align: middle;
-}
-
-.location{
-    padding:30px;
-    border:2px solid black;
+    clear:both;
+    content:"";
 }
