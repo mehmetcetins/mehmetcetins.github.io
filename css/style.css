@@ -1,0 +1,40 @@
+a{
+    text-decoration: none !important;
+    color:black !important;
+    transition:all 0.3s linear;
+    border:1px solid transparent;
+}
+
+.header a:hover {
+    border-bottom:1px solid red;
+}
+.header a{
+    float:right;
+    margin-left:20px;
+}
+.blog{
+    padding:10px 8%;
+}
+.post-thumbnail{
+    margin-bottom: 20px;
+}
+.post{
+    margin-bottom:20px;
+}
+.header {
+    padding:20px;
+    border:2px solid black;
+    border-top-color: transparent;
+    margin:auto 8%;
+    box-shadow:0 2px 5px grey;
+}
+
+.continue:hover {
+    color:white !important;
+}
+
+.clear:after{
+    display:block;
+    clear:both;
+    content:"";
+}
