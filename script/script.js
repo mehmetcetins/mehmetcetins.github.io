@@ -1,6 +1,6 @@
 $(document).ready(function(){
     var arr = ["BMB","FZK","LCI","MAT","TBT","TDI","YDI"];
-    $(".submit").click(function(){
+    $(".submit").click.touch(function(){
         var notlar = [];
         var katsayilar = [];
         $.each(arr,function(i,val){
