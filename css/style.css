@@ -38,3 +38,11 @@ a{
     clear:both;
     content:"";
 }
+
+.not table{
+    width: 100%;
+}
+.not table td {
+    width:33%;
+    text-align:center;
+}
