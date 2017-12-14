@@ -20,7 +20,7 @@ $(document).ready(function(){
             c += notlar[i]*katsayilar[i];
             k += katsayilar[i];
         }
-        $(".vize td:eq(1)").text(c/k);
+        $(".vize td:eq(1)").text((c/k).toFixed(2));
         $(".vize td:eq(2)").text((c/k)*0.3);
         return(false);
     }))
