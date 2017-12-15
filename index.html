@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vize Ortalaması Hesaplama</title>
+    <title>Genel Ortalama Hesaplama</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -12,45 +12,66 @@
     <div class="container jumbotron">
         <div class="not">
             <table class="table table-dark">
-                <tr class="vize">
-                    <td>Vize Ortalaması:</td>
+                <tr class="genel">
+                    <td>Genel Ortalama :</td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td >Bilgisayar Mühendisliğine Giriş</td>
                     <td >4 kredi</td>
-                    <td ><input type="number" class="form-control" name = "BMB" min="0" max="100" kredi="4"></td>
+                    <td >
+                        <input type="number" class="form-control" name = "BMB" min="0" max="100" kredi="4">
+                        <input type="number" class="form-control f" name = "BMB" min="0" max="100" kredi="4">  
+                    </td>
                 </tr>
                 <tr>
                     <td>Fizik 1</td>
                     <td>5 kredi</td>
-                    <td><input type="number" class="form-control" name = "FZK" min="0" max="100" kredi="5"></td>
+                    <td>
+                        <input type="number" class="form-control" name = "FZK" min="0" max="100" kredi="5">
+                        <input type="number" class="form-control f" name = "FZK" min="0" max="100" kredi="5">
+                    </td>
                 </tr>
                 <tr>
                     <td>Lineer Cebir</td>
                     <td>6 kredi</td>
-                    <td><input type="number" class="form-control" name = "LCI" min ="0" max="100" kredi="6"></td>
+                    <td>
+                        <input type="number" class="form-control" name = "LCI" min ="0" max="100" kredi="6">
+                        <input type="number" class="form-control f" name = "LCI" min="0" max="100" kredi="6">
+                    </td>
                 </tr>
                 <tr>
                     <td>Matematik 1</td>
                     <td>6 kredi</td>
-                    <td><input type="number" class="form-control" name = "MAT" min ="0" max="100" kredi="6"></td>
+                    <td>
+                        <input type="number" class="form-control" name = "MAT" min ="0" max="100" kredi="6">
+                        <input type="number" class="form-control f" name = "MAT" min="0" max="100" kredi="6">
+                    </td>
                 </tr>
                 <tr>
                     <td>Temel Bilgi Teknolojileri Kullanımı</td>
                     <td>4 kredi</td>
-                    <td><input type="number" class="form-control" name = "TBT" min ="0" max="100" kredi="4"></td>
+                    <td>
+                        <input type="number" class="form-control" name = "TBT" min ="0" max="100" kredi="4">
+                        <input type="number" class="form-control f" name = "TBT" min="0" max="100" kredi="4">
+                    </td>
                 </tr>
                 <tr>
                     <td>Türk Dili 1</td>
                     <td>2 kredi</td>
-                    <td><input type="number" class="form-control" name = "TDI" min ="0" max="100" kredi="2"></td>
+                    <td>
+                        <input type="number" class="form-control" name = "TDI" min ="0" max="100" kredi="2">
+                        <input type="number" class="form-control f" name = "TDI" min="0" max="100" kredi="2">
+                    </td>
                 </tr>
                 <tr>
                     <td>Yabancı Dil 1</td>
                     <td>3 kredi</td>
-                    <td><input type="number" class="form-control" name = "YDI" min ="0" max="100" kredi="3"></td>
+                    <td>
+                        <input type="number" class="form-control" name = "YDI" min ="0" max="100" kredi="3">
+                        <input type="number" class="form-control f" name = "YDI" min="0" max="100" kredi="3">
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="3"><input type="submit" value = "Hesapla" class = "submit btn btn-primary form-control"></td>

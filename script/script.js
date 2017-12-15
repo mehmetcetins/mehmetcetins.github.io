@@ -3,7 +3,7 @@ $(document).ready(function(){
     var arr = ["BMB","FZK","LCI","MAT","TBT","TDI","YDI"];
     $(".submit").on("click touchstart",(function(){
         $.each([1,2],function(i,val){
-            $(".vize td:eq("+val+")").text(" ");
+            $(".genel td:eq("+val+")").text(" ");
         })
         var notlar = [];
         var katsayilar = [];
@@ -24,29 +24,68 @@ $(document).ready(function(){
             c += notlar[i]*katsayilar[i];
             k += katsayilar[i];
         }
-        t = c/k;
-        $(".vize td:eq(1)").append((t).toFixed(2));
-        $(".vize td:eq(2)").append((t)*0.3);
+        tz = c/k;
+        notlar=[];
+        katsayilar=[];
+        k=0;
+        c=0;
+        $.each(arr,function(i,val){
+            value = $("input[name='"+val+"'].f").val();
+            if(  value == 0 ){
+                notlar.push(0);
+                katsayilar.push($("input[name='"+val+"'].f").attr("kredi"));
+            }
+            else {
+                notlar.push(parseFloat(value));
+                katsayilar.push(parseInt($("input[name='"+val+"'].f").attr("kredi")));
+            }
+        })
+        
+        for(i = 0;i<notlar.length;i++){
+            c += notlar[i]*katsayilar[i];
+            k += katsayilar[i];
+        }
+        tf = c/k;
+        console.log(tf);
+        console.log(tz);
+        t = tf > 0 && tz > 0 ? tf*0.7 + tz*0.3 : 0;
+        t = tf > 0 && tz == 0 ? tf : t;
+        t = tf == 0 && tz > 0 ? tz : t; 
+        $(".genel td:eq(1)").append((t).toFixed(2));
+        if (t != 0){
+            if (tz == 0){
+                $(".genel td:eq(2)").append((tz)*0.7);
+                $(".genel td:eq(0)").text("Final Ortalaması :");
+            }
+            else if (tf == 0){
+                $(".genel td:eq(2)").append((tz)*0.3);
+                $(".genel td:eq(0)").text("Vize Ortalaması :");
+            }
+            else 
+                $(".genel td:eq(0)").text("Genel Ortalama :");
+        }
+        else {
+            $(".genel td:eq(0)").text("Genel Ortalama :");
+        }
 
         if(t>87 && t<=100)
-            $(".vize td:eq(1)").append(" AA");
+            $(".genel td:eq(1)").append(" AA");
         else if(t>81 && t<=87)
-            $(".vize td:eq(1)").append(" BA");
+            $(".genel td:eq(1)").append(" BA");
         else if(t>=74 && t<=80)
-            $(".vize td:eq(1)").append(" BB");
+            $(".genel td:eq(1)").append(" BB");
         else if(t>=67 && t<=73)
-            $(".vize td:eq(1)").append(" CB");
+            $(".genel td:eq(1)").append(" CB");
         else if(t>=60 && t<=66)
-            $(".vize td:eq(1)").append(" CC");
+            $(".genel td:eq(1)").append(" CC");
         else if(t>=53 && t<=59)
-            $(".vize td:eq(1)").append(" DC");
+            $(".genel td:eq(1)").append(" DC");
         else if(t>=46 && t<=52)
-            $(".vize td:eq(1)").append(" DD");
+            $(".genel td:eq(1)").append(" DD");
         else if(t>=39 && t<=45)
-            $(".vize td:eq(1)").append(" FD");
+            $(".genel td:eq(1)").append(" FD");
         else if(t>=0 && t<=38)
-            $(".vize td:eq(1)").append(" FF");
-
+            $(".genel td:eq(1)").append(" FF");
         return(false);
     }))
 })

@@ -46,3 +46,14 @@ a{
     width:33%;
     text-align:center;
 }
+
+.not table td input:not(.submit){
+    width:47%;
+    float:left;
+}
+.not table td:nth-child(even){
+    width:20%;
+}
+.f{
+    margin-left:3%;
+}
