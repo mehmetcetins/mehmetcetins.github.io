@@ -55,17 +55,17 @@ $(document).ready(function(){
         if (t != 0){
             if (tz == 0){
                 $(".genel td:eq(2)").append((tz)*0.7);
-                $(".genel td:eq(0)").text("Final Ortalaması :");
+                $(".genel td:eq(0)").text("Final Ortalaması");
             }
             else if (tf == 0){
                 $(".genel td:eq(2)").append((tz)*0.3);
-                $(".genel td:eq(0)").text("Vize Ortalaması :");
+                $(".genel td:eq(0)").text("Vize Ortalaması");
             }
             else 
-                $(".genel td:eq(0)").text("Genel Ortalama :");
+                $(".genel td:eq(0)").text("Genel Ortalama");
         }
         else {
-            $(".genel td:eq(0)").text("Genel Ortalama :");
+            $(".genel td:eq(0)").text("Genel Ortalama");
         }
 
         if(t>87 && t<=100)
