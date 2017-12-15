@@ -54,11 +54,11 @@ $(document).ready(function(){
         $(".genel td:eq(1)").append((t).toFixed(2));
         if (t != 0){
             if (tz == 0){
-                $(".genel td:eq(2)").append((tz)*0.7);
+                $(".genel td:eq(2)").append(((tz)*0.7).toFixed(2));
                 $(".genel td:eq(0)").text("Final Ortalaması");
             }
             else if (tf == 0){
-                $(".genel td:eq(2)").append((tz)*0.3);
+                $(".genel td:eq(2)").append(((tz)*0.3).toFixed(2));
                 $(".genel td:eq(0)").text("Vize Ortalaması");
             }
             else 
@@ -89,4 +89,14 @@ $(document).ready(function(){
         $(document).scrollTop(0);
         return(false);
     }))
+
+    $("input:not(.submit)").keydown(function(e){
+        if (e.key == "-")
+            e.preventDefault();
+        
+    }).keyup(function(){
+        if (parseInt($(this).val()) > 100){
+            $(this).val($(this).val().substr(0,2));
+        }
+    })
 })
