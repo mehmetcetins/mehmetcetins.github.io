@@ -86,6 +86,7 @@ $(document).ready(function(){
             $(".genel td:eq(1)").append(" FD");
         else if(t>=0 && t<=38)
             $(".genel td:eq(1)").append(" FF");
+        $(document).scrollTop(0);
         return(false);
     }))
 })
