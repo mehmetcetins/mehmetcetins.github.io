@@ -1,6 +1,10 @@
 $(document).ready(function(){
+    
     var arr = ["BMB","FZK","LCI","MAT","TBT","TDI","YDI"];
     $(".submit").on("click touchstart",(function(){
+        $.each([1,2],function(i,val){
+            $(".vize td:eq("+val+")").text(" ");
+        })
         var notlar = [];
         var katsayilar = [];
         $.each(arr,function(i,val){
@@ -20,8 +24,29 @@ $(document).ready(function(){
             c += notlar[i]*katsayilar[i];
             k += katsayilar[i];
         }
-        $(".vize td:eq(1)").text((c/k).toFixed(2));
-        $(".vize td:eq(2)").text((c/k)*0.3);
+        t = c/k;
+        $(".vize td:eq(1)").append((t).toFixed(2));
+        $(".vize td:eq(2)").append((t)*0.3);
+
+        if(t>87 && t<=100)
+            $(".vize td:eq(1)").append(" AA");
+        else if(t>81 && t<=87)
+            $(".vize td:eq(1)").append(" BA");
+        else if(t>=74 && t<=80)
+            $(".vize td:eq(1)").append(" BB");
+        else if(t>=67 && t<=73)
+            $(".vize td:eq(1)").append(" CB");
+        else if(t>=60 && t<=66)
+            $(".vize td:eq(1)").append(" CC");
+        else if(t>=53 && t<=59)
+            $(".vize td:eq(1)").append(" DC");
+        else if(t>=46 && t<=52)
+            $(".vize td:eq(1)").append(" DD");
+        else if(t>=39 && t<=45)
+            $(".vize td:eq(1)").append(" FD");
+        else if(t>=0 && t<=38)
+            $(".vize td:eq(1)").append(" FF");
+
         return(false);
     }))
 })
