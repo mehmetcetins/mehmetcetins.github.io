@@ -48,12 +48,12 @@ a{
 }
 
 .not table td input:not(.submit){
-    width:47%;
+    width:49%;
     float:left;
 }
 .not table td:nth-child(even){
     width:20%;
 }
 .f{
-    margin-left:3%;
+    margin-left:1%;
 }
