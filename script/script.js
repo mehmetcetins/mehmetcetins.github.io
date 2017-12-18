@@ -54,7 +54,7 @@ $(document).ready(function(){
         $(".genel td:eq(1)").append((t).toFixed(2));
         if (t != 0){
             if (tz == 0){
-                $(".genel td:eq(2)").append(((tz)*0.7).toFixed(2));
+                $(".genel td:eq(2)").append(((tf)*0.7).toFixed(2));
                 $(".genel td:eq(0)").text("Final Ortalaması");
             }
             else if (tf == 0){
