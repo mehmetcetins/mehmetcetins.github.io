@@ -61,8 +61,10 @@ $(document).ready(function(){
                 $(".genel td:eq(2)").append(((tz)*0.3).toFixed(2));
                 $(".genel td:eq(0)").text("Vize Ortalaması");
             }
-            else 
+            else {
                 $(".genel td:eq(0)").text("Genel Ortalama");
+                $(".genel td:eq(2)").text(((4*t)/100).toFixed(3));
+            }
         }
         else {
             $(".genel td:eq(0)").text("Genel Ortalama");
