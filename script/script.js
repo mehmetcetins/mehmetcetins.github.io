@@ -70,6 +70,7 @@ var ders = new Vue({
             }
             this.hn();
             this.dort = ((this.nt * 4)/100).toFixed(2);
+            $(document).scrollTop(0);
         },
         chg : function(){
             var bd = [];
