@@ -1,19 +1,15 @@
 
 $(document).ready(function(){
-    c = 0
-    $("div").on("keyup","input[type=number]",function(e){
-        if (c == 3){
-            $(this).val($(this).val().match(/^(100)|^[0-9]{2}/g));
-        }
-        if (e.keyCode == 8){
-            if (c != 0)
-                c--;
-        }
-        else {
-            if (c != 3)
-                c++;
-        }
+    c = 0;
+    k = 0;
+    $("div").on("keydown","input[type=number]",function(e){
+        if (e.key == "-")
+            e.preventDefault();
         
+    }).on("keyup","input[type=number]",function(){
+        if (parseInt($(this).val()) > 100){
+            $(this).val($(this).val().substr(0,2));
+        }
     });
 });
 

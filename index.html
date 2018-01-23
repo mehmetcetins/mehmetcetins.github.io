@@ -33,10 +33,10 @@
             <table class="table table-dark">
                 <tr class="genel">
                     <td>
-                        <span v-if = "nt == -1">Genel Ortalama</span>
-                        <span v-if = "f == 0">Vize Ortalaması</span>
-                        <span v-if = "v == 0">Final Ortalaması</span>
-                        <span v-if = "f != 0 && f !=-1 && v != 0 && v != -1">Genel Ortalama</span>
+                        <span v-if = "nt == -1 || nt == 0">Genel Ortalama</span>
+                        <span v-else-if = "f == 0 && v !=0">Vize Ortalaması</span>
+                        <span v-else-if = "v == 0 && f !=0">Final Ortalaması</span>
+                        <span v-else-if = "f != 0 && f !=-1 && v != 0 && v != -1">Genel Ortalama</span>
                     </td>
                     <td><span v-show="nt != -1 && !isNaN(nt)">{{ nt }} {{h}}</span></td>
                     <td><span v-show="dort != -1">{{ dort }}</span></td>
