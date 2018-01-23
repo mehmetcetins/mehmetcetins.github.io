@@ -7,79 +7,62 @@
     <title>Genel Ortalama Hesaplama</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
+    
+    <script src="script/vue.js"></script>
+    <script src="script/jquery.js"></script>
 </head>
 <body>
-    <div class="container jumbotron">
-        <div class="not">
+    
+
+    <div class="container jumbotron" id = "ders" >
+            <div id = "bolumler">
+                <select v-model="selected" class="form-control form-group">
+                    <option value="0">Seçiniz</option>
+                    <option value="bilgisayar"> Bilgisayar</option>
+                    <option value="biyomedikal"> Biyomedikal</option>
+                    <option value="cevre"> Çevre</option>
+                    <option value="elektrik">Elektrik ve Elektronik</option>
+                    <option value="endustri">Endüstri</option>
+                    <option value="insaat">İnşaat</option>
+                    <option value="makine">Makine</option>
+                    <option value="mekatronik">Mekatronik</option>
+                    <option value="tekstil">Tekstil</option>
+                </select>
+            </div>
+        <div class="not" v-if="selected !='0' && selected != 'mekatronik' ">
             <table class="table table-dark">
                 <tr class="genel">
-                    <td>Genel Ortalama</td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        <span v-if = "nt == -1">Genel Ortalama</span>
+                        <span v-if = "f == 0">Vize Ortalaması</span>
+                        <span v-if = "v == 0">Final Ortalaması</span>
+                        <span v-if = "f != 0 && f !=-1 && v != 0 && v != -1">Genel Ortalama</span>
+                    </td>
+                    <td><span v-show="nt != -1 && !isNaN(nt)">{{ nt }} {{h}}</span></td>
+                    <td><span v-show="dort != -1">{{ dort }}</span></td>
                 </tr>
-                <tr>
-                    <td >Bilgisayar Mühendisliğine Giriş</td>
-                    <td >4 kredi</td>
+                <tr v-for = "(value,index) in items">
+                    <td >{{ items[index][0] }}</td>
+                    <td >{{ items[index][1] }}</td>
                     <td >
-                        <input type="number" class="form-control" name = "BMB" min="0" max="100" kredi="4">
-                        <input type="number" class="form-control f" name = "BMB" min="0" max="100" kredi="4">  
+                        <input type="number" min="0" max= "100" class="form-control">
+                        <input type="number" min="0" max= "100" class="form-control">  
                     </td>
                 </tr>
                 <tr>
-                    <td>Fizik 1</td>
-                    <td>5 kredi</td>
-                    <td>
-                        <input type="number" class="form-control" name = "FZK" min="0" max="100" kredi="5">
-                        <input type="number" class="form-control f" name = "FZK" min="0" max="100" kredi="5">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Lineer Cebir</td>
-                    <td>6 kredi</td>
-                    <td>
-                        <input type="number" class="form-control" name = "LCI" min ="0" max="100" kredi="6">
-                        <input type="number" class="form-control f" name = "LCI" min="0" max="100" kredi="6">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Matematik 1</td>
-                    <td>6 kredi</td>
-                    <td>
-                        <input type="number" class="form-control" name = "MAT" min ="0" max="100" kredi="6">
-                        <input type="number" class="form-control f" name = "MAT" min="0" max="100" kredi="6">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Temel Bilgi Teknolojileri Kullanımı</td>
-                    <td>4 kredi</td>
-                    <td>
-                        <input type="number" class="form-control" name = "TBT" min ="0" max="100" kredi="4">
-                        <input type="number" class="form-control f" name = "TBT" min="0" max="100" kredi="4">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Türk Dili 1</td>
-                    <td>2 kredi</td>
-                    <td>
-                        <input type="number" class="form-control" name = "TDI" min ="0" max="100" kredi="2">
-                        <input type="number" class="form-control f" name = "TDI" min="0" max="100" kredi="2">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Yabancı Dil 1</td>
-                    <td>3 kredi</td>
-                    <td>
-                        <input type="number" class="form-control" name = "YDI" min ="0" max="100" kredi="3">
-                        <input type="number" class="form-control f" name = "YDI" min="0" max="100" kredi="3">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3"><input type="submit" value = "Hesapla" class = "submit btn btn-primary form-control"></td>
+                    <td colspan="3"><input type="submit" v-on:click="sub" value = "Hesapla" class = "submit btn btn-primary form-control"></td>
                 </tr>
             </table>
-        </div>    
+        </div>
+        <div v-if= "selected == '0'">
+            <h1 align='center'>lütfen bölüm seçiniz</h1>
+        </div>
+        <div v-if= "selected == 'mekatronik'">
+            <h1 align='center'>Bu bölümle ilgili herhangi bir bilgi yok</h1>
+        </div>
     </div> 
-    <script src="script/jquery.js"></script>
+
+    
     <script src="script/script.js"></script>
 </body>
 </html>

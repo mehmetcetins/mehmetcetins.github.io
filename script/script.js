@@ -1,104 +1,121 @@
+
 $(document).ready(function(){
-    
-    var arr = ["BMB","FZK","LCI","MAT","TBT","TDI","YDI"];
-    $(".submit").on("click touchstart",(function(){
-        $.each([1,2],function(i,val){
-            $(".genel td:eq("+val+")").text(" ");
-        })
-        var notlar = [];
-        var katsayilar = [];
-        $.each(arr,function(i,val){
-            value = $("input[name='"+val+"']").val();
-            if(  value == 0 ){
-                notlar.push(0);
-                katsayilar.push($("input[name='"+val+"']").attr("kredi"));
-            }
-            else {
-                notlar.push(parseFloat(value));
-                katsayilar.push(parseInt($("input[name='"+val+"']").attr("kredi")));
-            }
-        })
-        k=0;
-        c=0;
-        for(i = 0;i<notlar.length;i++){
-            c += notlar[i]*katsayilar[i];
-            k += katsayilar[i];
+    c = 0
+    $("div").on("keyup","input[type=number]",function(e){
+        if (c == 3){
+            $(this).val($(this).val().match(/^(100)|^[0-9]{2}/g));
         }
-        tz = c/k;
-        notlar=[];
-        katsayilar=[];
-        k=0;
-        c=0;
-        $.each(arr,function(i,val){
-            value = $("input[name='"+val+"'].f").val();
-            if(  value == 0 ){
-                notlar.push(0);
-                katsayilar.push($("input[name='"+val+"'].f").attr("kredi"));
-            }
-            else {
-                notlar.push(parseFloat(value));
-                katsayilar.push(parseInt($("input[name='"+val+"'].f").attr("kredi")));
-            }
-        })
-        
-        for(i = 0;i<notlar.length;i++){
-            c += notlar[i]*katsayilar[i];
-            k += katsayilar[i];
-        }
-        tf = c/k;
-        console.log(tf);
-        console.log(tz);
-        t = tf > 0 && tz > 0 ? tf*0.7 + tz*0.3 : 0;
-        t = tf > 0 && tz == 0 ? tf : t;
-        t = tf == 0 && tz > 0 ? tz : t; 
-        $(".genel td:eq(1)").append((t).toFixed(2));
-        if (t != 0){
-            if (tz == 0){
-                $(".genel td:eq(2)").append(((tf)*0.7).toFixed(2));
-                $(".genel td:eq(0)").text("Final Ortalaması");
-            }
-            else if (tf == 0){
-                $(".genel td:eq(2)").append(((tz)*0.3).toFixed(2));
-                $(".genel td:eq(0)").text("Vize Ortalaması");
-            }
-            else {
-                $(".genel td:eq(0)").text("Genel Ortalama");
-                $(".genel td:eq(2)").text(((4*t)/100).toFixed(3));
-            }
+        if (e.keyCode == 8){
+            if (c != 0)
+                c--;
         }
         else {
-            $(".genel td:eq(0)").text("Genel Ortalama");
+            if (c != 3)
+                c++;
         }
-
-        if(t>87 && t<=100)
-            $(".genel td:eq(1)").append(" AA");
-        else if(t>81 && t<=87)
-            $(".genel td:eq(1)").append(" BA");
-        else if(t>=74 && t<=80)
-            $(".genel td:eq(1)").append(" BB");
-        else if(t>=67 && t<=73)
-            $(".genel td:eq(1)").append(" CB");
-        else if(t>=60 && t<=66)
-            $(".genel td:eq(1)").append(" CC");
-        else if(t>=53 && t<=59)
-            $(".genel td:eq(1)").append(" DC");
-        else if(t>=46 && t<=52)
-            $(".genel td:eq(1)").append(" DD");
-        else if(t>=39 && t<=45)
-            $(".genel td:eq(1)").append(" FD");
-        else if(t>=0 && t<=38)
-            $(".genel td:eq(1)").append(" FF");
-        $(document).scrollTop(0);
-        return(false);
-    }))
-
-    $("input:not(.submit)").keydown(function(e){
-        if (e.key == "-")
-            e.preventDefault();
         
-    }).keyup(function(){
-        if (parseInt($(this).val()) > 100){
-            $(this).val($(this).val().substr(0,2));
+    });
+});
+
+
+
+a = document.createElement("script");
+a.src = document.location.pathname.match( /.*\//g )[0]+"bolumders.js";
+document.head.appendChild(a);
+document.head.removeChild(a);
+delete a;
+
+
+var ders = new Vue({
+    el:"#ders",
+    data:{
+        items : this.chg,
+        selected:"0",
+        v:-1,
+        f:-1,
+        nt: -1,
+        h: -1,
+        dort : -1
+    },
+    watch:{
+        selected : function(n,o){
+            this.chg();
+            this.v = -1;
+            this.f = -1;
+            this.nt = -1;
+            this.h = -1;
         }
-    })
-})
+    },
+    methods:{
+        sub : function(){
+            a =[];b = [];
+            $.each($("table tr td input:not(.submit)"), function( index, value ) {
+                if (index %2 == 0)
+                    a.push(parseInt($("table tr td input:not(.submit):eq("+index +")").val()));
+                else 
+                    b.push(parseInt($("table tr td input:not(.submit):eq("+index +")").val()));
+            });
+            this.v = a;
+            this.f = b;
+            this.v = this.ntf(this.v,this.items,0.3);
+            this.f = this.ntf(this.f,this.items,0.7);
+            if(!(isNaN(this.v) && isNaN(this.f))){
+                this.nt = (this.v + this.f).toFixed(2);
+            }
+            else {
+                if (isNaN(this.v))
+                    this.nt = this.f.toFixed(2);
+                else 
+                    this.nt = this.v.toFixed(2);
+            }
+            this.hn();
+            this.dort = ((this.nt * 4)/100).toFixed(2);
+        },
+        chg : function(){
+            var bd = [];
+            var c = this.selected;
+            if (typeof(bolumders[c]) == "undefined")
+                console.log(c + " yok");
+            else 
+                if (c != "0")
+                    {
+                        var length = bolumders[c].alan.length;
+                        var bolum = bolumders[c].alan;
+                        var kredi = bolumders[c].kredi;
+                        for(i = 0; i< length;i++){
+                            bd.push([bolum[i],kredi[i]]);
+                        }
+                    }
+                    this.items = bd;
+        },
+        ntf : function(vf,kre,kts){
+            t = 0;
+            k = 0;
+            for(i = 0;i<vf.length;i++){
+                if(isNaN(vf[i])){
+                    k += parseInt(kre[i][1]);
+                    continue;
+                }
+                else
+                {
+                    t += vf[i] * parseInt(kre[i][1]);
+                    k += parseInt(kre[i][1]);
+                }
+                
+            }
+            return (t/k)*kts;
+        },
+        hn :function(){
+            ntk = this.nt;
+            this.h = ntk >= 90 && ntk <=100 ? "AA" :
+            ntk >= 85 && ntk <90 ? "BA" :
+            ntk >= 80 && ntk <85 ? "BB" :
+            ntk >= 75 && ntk <80 ? "CB" :
+            ntk >= 70 && ntk <75 ? "CC" :
+            ntk >= 65 && ntk <70 ? "DC" :
+            ntk >= 60 && ntk <65 ? "DD" :
+            ntk >= 50 && ntk <60 ? "FD" : "FF";
+
+        }
+    }
+});
