@@ -41,7 +41,7 @@
                     <td><span v-show="nt != -1 && !isNaN(nt)">{{ nt }} {{h}}</span></td>
                     <td><span v-show="dort != -1">{{ dort }}</span></td>
                 </tr>
-                <tr v-for = "(value,index) in items">
+                <tr v-on:click="dlt" v-for = "(value,index) in items">
                     <td >{{ items[index][0] }}</td>
                     <td >{{ items[index][1] }}</td>
                     <td >

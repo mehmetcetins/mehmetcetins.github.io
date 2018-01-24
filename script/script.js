@@ -27,6 +27,7 @@ var ders = new Vue({
     data:{
         items : this.chg,
         selected:"0",
+        deleted:[],
         v:-1,
         f:-1,
         nt: -1,
@@ -35,11 +36,16 @@ var ders = new Vue({
     },
     watch:{
         selected : function(n,o){
+            /* for(i = 0;i<this.deleted.length;i++){
+                this.items[this.deleted[i][0]] = this.deleted[i][1]; gereksiz
+            } */ 
             this.chg();
             this.v = -1;
             this.f = -1;
             this.nt = -1;
             this.h = -1;
+            this.deleted = [];
+            $("table tr").css("opacity","1");
         }
     },
     methods:{
@@ -113,6 +119,35 @@ var ders = new Vue({
             ntk >= 60 && ntk <65 ? "DD" :
             ntk >= 50 && ntk <60 ? "FD" : "FF";
 
+        },
+        dlt : function(e){
+            
+            k = this.deleted.length;
+            a = !e.target.parentElement.matches("tr") ? e.target.parentElement.parentElement :e.target.parentElement ;
+            e = a;
+            d = true;
+            a = Array.from(a.parentElement.rows).indexOf(a) - 1
+            for (i = 0 ;i < k; i++)
+            {
+                if (this.deleted[i][0] == a )
+                {
+                    d = false;
+                    break;
+                }
+            }
+            if (d){
+                this.deleted.push([a,this.items[a][1]]);
+                d = true;
+            }
+            k = this.deleted.length;
+            for (i = 0 ; i < k; i++)
+                {
+                    this.items[this.deleted[i][0]][1] = 0;
+                    $(e).css("opacity","0.4");
+                    $(e.children[2].children[0]).prop("disabled",true);
+                    $(e.children[2].children[1]).prop("disabled",true);
+                }
         }
+
     }
 });
