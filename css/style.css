@@ -67,3 +67,25 @@ a{
     padding-right:0.3rem;
     padding-left:0.3rem;
 }
+
+.d{
+    float:left;
+    background:green;
+
+}
+.ddc div{
+    float:left;
+}
+.ddc div:first-child{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.ddc div:last-child{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.clear:after{
+    display:block;
+    content:'';
+    clear:both;
+}

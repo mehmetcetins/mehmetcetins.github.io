@@ -41,7 +41,7 @@
                     <td><span v-show="nt != -1 && !isNaN(nt)">{{ nt }} {{h}}</span></td>
                     <td><span v-show="dort != -1">{{ dort }}</span></td>
                 </tr>
-                <tr v-on:click="dlt" v-for = "(value,index) in items">
+                <tr v-on:click="drtdlt" v-for = "(value,index) in items">
                     <td >{{ items[index][0] }}</td>
                     <td >{{ items[index][1] }}</td>
                     <td >
@@ -59,6 +59,11 @@
         </div>
         <div v-if= "selected == 'mekatronik'">
             <h1 align='center'>Bu bölümle ilgili herhangi bir bilgi yok</h1>
+        </div>
+
+        <div v-show="selected !='0' && selected !='mekatronik' " class="ddc clear">
+            <div v-on:click="dlta" class="col-6 btn btn-danger ">KALDIR</div>
+            <div v-on:click="drta" class="col-6 btn btn-success">GERİ GETİR</div>
         </div>
     </div> 
 

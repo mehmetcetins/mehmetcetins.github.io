@@ -21,7 +21,8 @@ document.head.appendChild(a);
 document.head.removeChild(a);
 delete a;
 
-
+dl = false;
+dr = false;
 var ders = new Vue({
     el:"#ders",
     data:{
@@ -121,32 +122,63 @@ var ders = new Vue({
 
         },
         dlt : function(e){
-            
-            k = this.deleted.length;
-            a = !e.target.parentElement.matches("tr") ? e.target.parentElement.parentElement :e.target.parentElement ;
-            e = a;
-            d = true;
-            a = Array.from(a.parentElement.rows).indexOf(a) - 1
-            for (i = 0 ;i < k; i++)
-            {
-                if (this.deleted[i][0] == a )
-                {
-                    d = false;
-                    break;
-                }
-            }
-            if (d){
-                this.deleted.push([a,this.items[a][1]]);
+            if(dl){
+                k = this.deleted.length;
+                a = !e.target.parentElement.matches("tr") ? e.target.parentElement.parentElement :e.target.parentElement ;
+                e = a;
                 d = true;
-            }
-            k = this.deleted.length;
-            for (i = 0 ; i < k; i++)
+                a = Array.from(a.parentElement.rows).indexOf(a) - 1
+                for (i = 0 ;i < k; i++)
                 {
-                    this.items[this.deleted[i][0]][1] = 0;
-                    $(e).css("opacity","0.4");
-                    $(e.children[2].children[0]).prop("disabled",true);
-                    $(e.children[2].children[1]).prop("disabled",true);
+                    if (this.deleted[i][0] == a )
+                    {
+                        d = false;
+                        break;
+                    }
                 }
+                if (d){
+                    this.deleted.push([a,this.items[a][1]]);
+                    d = true;
+                }
+                k = this.deleted.length;
+                for (i = 0 ; i < k; i++)
+                    {
+                        this.items[this.deleted[i][0]][1] = 0;
+                        $(e).css("opacity","0.4");
+                        $(e.children[2].children[0]).prop("disabled",true);
+                        $(e.children[2].children[1]).prop("disabled",true);
+                    }
+            }
+        },
+        drt:function(e){
+            if(dr){
+                k = this.deleted.length;
+                a = !e.target.parentElement.matches("tr") ? e.target.parentElement.parentElement :e.target.parentElement ;
+                $(a).css("opacity","1");
+                $(a.children[2].children[0]).prop("disabled",false); 
+                $(a.children[2].children[1]).prop("disabled",false);
+                a = Array.from(a.parentElement.rows).indexOf(a) - 1
+                for (i = 0;i<k;i++){
+                    if(this.deleted[i][0]==a){
+                        this.items[a][1] = this.deleted[i][1];
+                        console.log(this.deleted.splice(i,1));
+                        break;
+                    }
+                }
+            }
+           
+        },
+        drtdlt : function(e){
+            this.drt(e);
+            this.dlt(e);
+        },
+        dlta:function(){
+            dl = dl ? !dl : !dl;
+            dr = false;
+        },
+        drta:function(){
+            dr = dr ? !dr : !dr;
+            dl = false;
         }
 
     }
