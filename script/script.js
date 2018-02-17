@@ -1,19 +1,36 @@
 
 $(document).ready(function(){
+    var aps = '<tr class = "scml">\
+                    <td><input type="text"  class="form-control"></td>\
+                    <td><input type="number" id="ekkredi" class="form-control"></td>\
+                    <td >\
+                        <input type="number" min="0" max= "100" class="form-control">\
+                        <input type="number" min="0" max= "100" class="form-control"> \
+                    </td> \
+                </tr>'
     c = 0;
     k = 0;
-    $("div").on("keydown","input[type=number]",function(e){
+    $(".not").on("keydown","input[type=number]",function(e){
         if (e.key == "-")
             e.preventDefault();
+        else if (e.key == "+")
+            e.preventDefault();
         
-    }).on("keyup","input[type=number]",function(){
+    }).on("keyup","table  td:nth-child(3) input[type=number]",function(){
         if (parseInt($(this).val()) > 100){
             $(this).val($(this).val().substr(0,2));
         }
     });
+
+    $("div").on("click touchstart",function(e){
+        a = e.target.parentElement.parentElement.matches(".scml") && e.target.id == "ekkredi" ? e.target.parentElement.parentElement :"ek yapma" ;
+        $(a).removeAttr("class");
+        $(aps).insertAfter(a);
+       
+    });
+
+
 });
-
-
 
 a = document.createElement("script");
 a.src = document.location.pathname.match( /.*\//g )[0]+"bolumders.js";
@@ -123,6 +140,7 @@ var ders = new Vue({
         },
         dlt : function(e){
             if(dl){
+                
                 k = this.deleted.length;
                 a = !e.target.parentElement.matches("tr") ? e.target.parentElement.parentElement :e.target.parentElement ;
                 e = a;
@@ -175,10 +193,14 @@ var ders = new Vue({
         dlta:function(){
             dl = dl ? !dl : !dl;
             dr = false;
+            tbcl = dl ? "darkred" : "";
+            $("table").css("background",tbcl);
         },
         drta:function(){
             dr = dr ? !dr : !dr;
             dl = false;
+            tbcl = dr ? "darkgreen" : "";
+            $("table").css("background",tbcl);
         }
 
     }

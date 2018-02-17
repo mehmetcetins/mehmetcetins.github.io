@@ -53,13 +53,19 @@ a{
 .not table tr:not(.genel){
     transition:opacity 0.5s
 }
-.not table td input:not(.submit){
+.not table td:nth-child(3) input:not(.submit){
     width:49%;
     float:left;
+    
+}
+.not table td input[type='text'],input[type="number"] {
+    text-align:center;
+    text-transform:capitalize;
 }
 .not table td:nth-child(even){
     width:20%;
 }
+
 .f{
     margin-left:1%;
 }
