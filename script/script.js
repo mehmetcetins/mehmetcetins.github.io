@@ -2,15 +2,17 @@
 $(document).ready(function(){
     var aps = '<tr class = "scml">\
                     <td><input type="text"  class="form-control"></td>\
-                    <td><input type="number" id="ekkredi" class="form-control"></td>\
+                    <td><input type="number" class="form-control ekkredi"></td>\
                     <td >\
                         <input type="number" min="0" max= "100" class="form-control">\
                         <input type="number" min="0" max= "100" class="form-control"> \
                     </td> \
-                </tr>'
+                </tr>';
+    
     c = 0;
     k = 0;
-    $(".not").on("keydown","input[type=number]",function(e){
+    
+    $("div").on("keydown","input[type=number]",function(e){
         if (e.key == "-")
             e.preventDefault();
         else if (e.key == "+")
@@ -21,12 +23,15 @@ $(document).ready(function(){
             $(this).val($(this).val().substr(0,2));
         }
     });
+    
+    
 
     $("div").on("click touchstart",function(e){
-        a = e.target.parentElement.parentElement.matches(".scml") && e.target.id == "ekkredi" ? e.target.parentElement.parentElement :"ek yapma" ;
-        $(a).removeAttr("class");
-        $(aps).insertAfter(a);
-       
+        a = e.target.parentElement.parentElement.matches(".scml") && $(e.target).attr("class") == "form-control ekkredi" ? e.target.parentElement.parentElement :"ek yapma" ;
+        if (a != "ek yapma"){
+            $(a).removeAttr("class");
+            $(aps).insertAfter(a);
+        }
     });
 
 
@@ -40,12 +45,14 @@ delete a;
 
 dl = false;
 dr = false;
+scmli = [];
 var ders = new Vue({
     el:"#ders",
     data:{
         items : this.chg,
         selected:"0",
         deleted:[],
+        scml:[],
         v:-1,
         f:-1,
         nt: -1,
@@ -63,17 +70,24 @@ var ders = new Vue({
             this.nt = -1;
             this.h = -1;
             this.deleted = [];
+            this.scml = [];
             $("table tr").css("opacity","1");
         }
     },
     methods:{
         sub : function(){
+            this.scml= [];
+            for(i = 0;i < $(".ekkredi").length;i++){
+                kredi = $(".ekkredi")[i].value == "" ? 0 : $(".ekkredi")[i].value; 
+                this.scml.push(["secmeli "+i,kredi]);
+                scmli.push(["secmeli "+i,kredi]); 
+            }
             a =[];b = [];
-            $.each($("table tr td input:not(.submit)"), function( index, value ) {
+            $.each($("table tr td input:not(.submit):not(.ekkredi):not([type='text'])"), function( index, value ) {
                 if (index %2 == 0)
-                    a.push(parseInt($("table tr td input:not(.submit):eq("+index +")").val()));
+                    a.push(parseInt($("table tr td input:not(.submit):not(.ekkredi):not([type='text']):eq("+index +")").val()));
                 else 
-                    b.push(parseInt($("table tr td input:not(.submit):eq("+index +")").val()));
+                    b.push(parseInt($("table tr td input:not(.submit):not(.ekkredi):not([type='text']):eq("+index +")").val()));
             });
             this.v = a;
             this.f = b;
@@ -91,6 +105,7 @@ var ders = new Vue({
             this.hn();
             this.dort = ((this.nt * 4)/100).toFixed(2);
             $(document).scrollTop(0);
+            return false;
         },
         chg : function(){
             var bd = [];
@@ -112,16 +127,20 @@ var ders = new Vue({
         ntf : function(vf,kre,kts){
             t = 0;
             k = 0;
+            scmli = this.scml;
+            tmkre = kre.concat(scmli);
+            console.log(tmkre);
             for(i = 0;i<vf.length;i++){
                 if(isNaN(vf[i])){
-                    k += parseInt(kre[i][1]);
+                    k += parseInt(tmkre[i][1]);
                     continue;
                 }
                 else
                 {
-                    t += vf[i] * parseInt(kre[i][1]);
-                    k += parseInt(kre[i][1]);
+                    t += vf[i] * parseInt(tmkre[i][1]);
+                    k += parseInt(tmkre[i][1]);
                 }
+                console.log(t);
                 
             }
             return (t/k)*kts;
