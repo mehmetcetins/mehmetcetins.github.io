@@ -1,6 +1,4 @@
-
-$(document).ready(function(){
-    var aps = '<tr class = "scml">\
+var aps = '<tr class = "scml">\
                     <td><input type="text"  class="form-control"></td>\
                     <td><input type="number" class="form-control ekkredi"></td>\
                     <td >\
@@ -8,6 +6,10 @@ $(document).ready(function(){
                         <input type="number" min="0" max= "100" class="form-control"> \
                     </td> \
                 </tr>';
+
+
+$(document).ready(function(){
+    
     
     c = 0;
     k = 0;
@@ -71,6 +73,9 @@ var ders = new Vue({
             this.h = -1;
             this.deleted = [];
             this.scml = [];
+            this.dort = -1;
+            $("input[type='text']").parent().parent().remove();
+            $($(".submit").parent().parent()).before(aps);
             $("table tr").css("opacity","1");
         }
     },
@@ -165,6 +170,7 @@ var ders = new Vue({
                 e = a;
                 d = true;
                 a = Array.from(a.parentElement.rows).indexOf(a) - 1
+                //this.items = this.items.concat(this.scml); butona tıklayınca this.scml'ye ekleme oluyor.
                 for (i = 0 ;i < k; i++)
                 {
                     if (this.deleted[i][0] == a )
