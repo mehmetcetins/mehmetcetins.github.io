@@ -53,6 +53,13 @@ $(document).ready(function(){
             }
             
         }
+
+        for (i = 0; i< ders.deleted.length;i++){
+            $("table tr:eq("+(ders.deleted[i][0]+1)+")").css("opacity","0.4");
+            $("table tr:eq("+(ders.deleted[i][0]+1)+")").children("td:eq(2)").children("input:eq(0)").prop("disabled",true);
+            $("table tr:eq("+(ders.deleted[i][0]+1)+")").children("td:eq(2)").children("input:eq(1)").prop("disabled",true);
+        }
+
         $(".scml").removeAttr("class");
         for (i = 0; i< ders.scml.length - 1;i++){
             $($(".submit").parent().parent()).before(aps);
@@ -253,6 +260,7 @@ var ders = new Vue({
         drt:function(e){
             if(dr){
                 k = this.deleted.length;
+                
                 a = !e.target.parentElement.matches("tr") ? e.target.parentElement.parentElement :e.target.parentElement ;
                 $(a).css("opacity","1");
                 $(a.children[2].children[0]).prop("disabled",false); 
@@ -262,10 +270,12 @@ var ders = new Vue({
                     if(this.deleted[i][0]==a){
                         this.items[a][1] = this.deleted[i][1];
                         console.log(this.deleted.splice(i,1));
+                        this.deleted;
                         break;
                     }
                 }
             }
+            this.deleted;
         
         },
         drtdlt : function(e){
