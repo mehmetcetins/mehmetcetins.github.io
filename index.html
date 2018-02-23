@@ -7,9 +7,11 @@
     <title>Genel Ortalama Hesaplama</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
-    
-    <script src="script/vue.js"></script>
+    <script id= "silinecek" src="/C:/Users/DELL/Desktop/mblog/bolumders.js"></script>
     <script src="script/jquery.js"></script>
+    <script src="script/vue.js"></script>
+    
+
 </head>
 <body>
     
@@ -70,12 +72,15 @@
         </div>
 
         <div v-show="selected !='0' && selected !='mekatronik' " class="ddc clear">
-            <div v-on:click="dlta" class="col-6 btn btn-danger ">KALDIR</div>
-            <div v-on:click="drta" class="col-6 btn btn-success">GERİ GETİR</div>
+            <div v-on:click="dltdrta" class="col-6 btn btn-danger kage">KALDIR / GERİ GETİR</div>
+            <button v-on:click="savenot" class="col-6 btn btn-info" disabled = "disabled">KAYDET</button>
         </div>
     </div> 
 
     
+    
+    
     <script src="script/script.js"></script>
+    
 </body>
 </html>

@@ -1,3 +1,7 @@
+
+document.getElementById("silinecek").remove();
+
+
 var aps = '<tr class = "scml">\
                     <td><input type="text"  class="form-control"></td>\
                     <td><input type="number" class="form-control ekkredi"></td>\
@@ -9,10 +13,10 @@ var aps = '<tr class = "scml">\
 
 
 $(document).ready(function(){
-    
-    
+
     c = 0;
     k = 0;
+    
     
     $("div").on("keydown","input[type=number]",function(e){
         if (e.key == "-")
@@ -35,26 +39,48 @@ $(document).ready(function(){
             $(aps).insertAfter(a);
         }
     });
-
-
+    if (!sav && localStorage.getItem("selected") != null){
+        tmplen = ders.vize.length * 2;
+        tmp = [];
+        c = 0;
+        for (i = 0 ; i < tmplen;i++){
+            if (i % 2 == 0) {
+                tmp.push(ders.vize[c]);
+            }
+            else {
+                tmp.push(ders.final[c]);
+                c++;
+            }
+            
+        }
+        $(".scml").removeAttr("class");
+        for (i = 0; i< ders.scml.length - 1;i++){
+            $($(".submit").parent().parent()).before(aps);
+            $(".ekkredi:eq("+i+")").val(ders.scml[i][1]);
+            $("input[type='text']:eq("+i+")").val(ders.scml[i][0]);
+        }
+        $.each($("table tr td input:not(.submit):not(.ekkredi):not([type='text'])"), function( index, value ) {
+            if (index %2 == 0)
+                $("table tr td input:not(.submit):not(.ekkredi):not([type='text']):eq("+index +")").val(tmp[index]);
+            else 
+                $("table tr td input:not(.submit):not(.ekkredi):not([type='text']):eq("+index +")").val(tmp[index]);
+        });
+    }
 });
-
-a = document.createElement("script");
-a.src = document.location.pathname.match( /.*\//g )[0]+"bolumders.js";
-document.head.appendChild(a);
-document.head.removeChild(a);
-delete a;
 
 dl = false;
 dr = false;
 scmli = [];
+sav = true;
 var ders = new Vue({
     el:"#ders",
     data:{
-        items : this.chg,
+        items : [],
         selected:"0",
         deleted:[],
         scml:[],
+        vize : [],
+        final : [],
         v:-1,
         f:-1,
         nt: -1,
@@ -63,29 +89,55 @@ var ders = new Vue({
     },
     watch:{
         selected : function(n,o){
-            /* for(i = 0;i<this.deleted.length;i++){
-                this.items[this.deleted[i][0]] = this.deleted[i][1]; gereksiz
-            } */ 
-            this.chg();
-            this.v = -1;
-            this.f = -1;
-            this.nt = -1;
-            this.h = -1;
-            this.deleted = [];
-            this.scml = [];
-            this.dort = -1;
-            $("input[type='text']").parent().parent().remove();
-            $($(".submit").parent().parent()).before(aps);
-            $("table tr").css("opacity","1");
+            
+            if (sav && localStorage.getItem("selected") != null)
+            {
+                this.items = JSON.parse(localStorage.getItem("items"));
+                this.deleted = JSON.parse(localStorage.getItem("deleted"));
+                this.vize = JSON.parse(localStorage.getItem("vize"));
+                this.scml = JSON.parse(localStorage.getItem("scml"));
+                this.final = JSON.parse(localStorage.getItem("final"));
+                this.v = localStorage.getItem("v");
+                this.f = localStorage.getItem("f");
+                this.nt = localStorage.getItem("nt");
+                this.h = localStorage.getItem("h");
+                this.dort = localStorage.getItem("dort");
+                this.chg();
+                sav = false;
+                
+            }
+            else{
+                this.chg();
+                this.v = -1;
+                this.f = -1;
+                this.nt = -1;
+                this.h = -1;
+                this.deleted = [];
+                this.scml = [];
+                this.dort = -1;
+                this.final = [];
+                this.vize = [];
+                $("input[type='text']").parent().parent().remove();
+                $($(".submit").parent().parent()).before(aps);
+                $("table tr").css("opacity","1");
+                $(".btn-info").prop("disabled",true);
+                $("input:not(.submit)").val("");
+            }
         }
     },
+    mounted : function(){
+        if (localStorage.getItem("selected") != null)
+            this.selected = localStorage.getItem("selected");
+    },
+
     methods:{
         sub : function(){
             this.scml= [];
             for(i = 0;i < $(".ekkredi").length;i++){
                 kredi = $(".ekkredi")[i].value == "" ? 0 : $(".ekkredi")[i].value; 
-                this.scml.push(["secmeli "+i,kredi]);
-                scmli.push(["secmeli "+i,kredi]); 
+                dersad = $("input[type='text']:eq("+i+")").val();
+                this.scml.push([dersad,kredi]);
+                scmli.push([dersad,kredi]); 
             }
             a =[];b = [];
             $.each($("table tr td input:not(.submit):not(.ekkredi):not([type='text'])"), function( index, value ) {
@@ -96,6 +148,8 @@ var ders = new Vue({
             });
             this.v = a;
             this.f = b;
+            this.vize = a;
+            this.final = b;
             this.v = this.ntf(this.v,this.items,0.3);
             this.f = this.ntf(this.f,this.items,0.7);
             if(!(isNaN(this.v) && isNaN(this.f))){
@@ -110,6 +164,8 @@ var ders = new Vue({
             this.hn();
             this.dort = ((this.nt * 4)/100).toFixed(2);
             $(document).scrollTop(0);
+            
+            $(".btn-info").prop("disabled",false);
             return false;
         },
         chg : function(){
@@ -128,6 +184,7 @@ var ders = new Vue({
                         }
                     }
                     this.items = bd;
+            
         },
         ntf : function(vf,kre,kts){
             t = 0;
@@ -209,24 +266,61 @@ var ders = new Vue({
                     }
                 }
             }
-           
+        
         },
         drtdlt : function(e){
             this.drt(e);
             this.dlt(e);
         },
-        dlta:function(){
-            dl = dl ? !dl : !dl;
-            dr = false;
-            tbcl = dl ? "darkred" : "";
-            $("table").css("background",tbcl);
+        dltdrta:function(){ 
+            
+            if ($(".kage").hasClass("btn-success"))
+                {
+                    dc = true;
+                    dr = dr ? !dr : !dr;
+                    dl = false;
+                    tbcl = dr ? "green" : "";
+                    $("table").css("background",tbcl);
+                    $(".kage").removeClass("btn-success");
+                    $(".kage").addClass("btn-dark");
+                }
+            else if ($(".kage").hasClass("btn-danger")){
+                
+                dl = dl ? !dl : !dl;
+                dr = false;
+                tbcl = dl ? "darkred" : "";
+                $("table").css("background",tbcl);
+                $(".kage").removeClass("btn-danger");
+                $(".kage").addClass("btn-success");
+                
+            }
+            else if ($(".kage").hasClass("btn-dark")){
+                
+                dl = false;
+                dr = false;
+                $("table").css("background","");
+                $(".kage").removeClass("btn-dark");
+                $(".kage").addClass("btn-danger");
+                
+            }
         },
-        drta:function(){
-            dr = dr ? !dr : !dr;
-            dl = false;
-            tbcl = dr ? "darkgreen" : "";
-            $("table").css("background",tbcl);
-        }
+        savenot: function(){
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("selected",this.selected);
+                localStorage.setItem("deleted",JSON.stringify(this.deleted));
+                localStorage.setItem("scml",JSON.stringify(this.scml));
+                localStorage.setItem("vize",JSON.stringify(this.vize));
+                localStorage.setItem("final",JSON.stringify(this.final));
+                localStorage.setItem("v",this.v);
+                localStorage.setItem("f",this.f);
+                localStorage.setItem("nt",this.nt);
+                localStorage.setItem("h",this.h);
+                localStorage.setItem("dort",this.dort);
+                localStorage.setItem("items",JSON.stringify(this.items));
+            } else {
+                prompt("tarayıcınız html5 web storage desteklemiyor");
+            }
+        },
 
-    }
+    },
 });
