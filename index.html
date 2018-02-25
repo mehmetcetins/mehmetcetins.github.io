@@ -73,7 +73,7 @@
 
         <div v-show="selected !='0' && selected !='mekatronik' " class="ddc clear">
             <div v-on:click="dltdrta" class="col-6 btn btn-danger kage">KALDIR / GERİ GETİR</div>
-            <button v-on:click="savenot" class="col-6 btn btn-info" disabled = "disabled">KAYDET</button>
+            <button v-on:click="savenot" class="col-6 btn btn-info">{{ buttonText }}</button>
         </div>
     </div> 
 

@@ -92,7 +92,8 @@ var ders = new Vue({
         f:-1,
         nt: -1,
         h: -1,
-        dort : -1
+        dort : -1,
+        buttonText : "KAYDET",
     },
     watch:{
         selected : function(n,o){
@@ -171,8 +172,6 @@ var ders = new Vue({
             this.hn();
             this.dort = ((this.nt * 4)/100).toFixed(2);
             $(document).scrollTop(0);
-            
-            $(".btn-info").prop("disabled",false);
             return false;
         },
         chg : function(){
@@ -314,8 +313,9 @@ var ders = new Vue({
                 
             }
         },
-        savenot: function(){
+        savenot: async function(){
             if (typeof(Storage) !== "undefined") {
+                
                 localStorage.setItem("selected",this.selected);
                 localStorage.setItem("deleted",JSON.stringify(this.deleted));
                 localStorage.setItem("scml",JSON.stringify(this.scml));
@@ -327,6 +327,12 @@ var ders = new Vue({
                 localStorage.setItem("h",this.h);
                 localStorage.setItem("dort",this.dort);
                 localStorage.setItem("items",JSON.stringify(this.items));
+                sself = this;
+                sself.buttonText = "KAYDEDİLDİ";
+                setTimeout(function(){
+                    sself.buttonText = "KAYDET";
+                },2000);
+                
             } else {
                 prompt("tarayıcınız html5 web storage desteklemiyor");
             }
