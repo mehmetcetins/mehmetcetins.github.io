@@ -160,13 +160,14 @@ var ders = new Vue({
             this.v = this.ntf(this.v,this.items,0.3);
             this.f = this.ntf(this.f,this.items,0.7);
             drto = 0;
-            if(!(isNaN(this.v) && !isNaN(this.f)) && this.v == 0 && this.f == 0 ){
+            if(!(isNaN(this.v) && !isNaN(this.f)) && this.v != 0 && this.f != 0 ){
                 this.nt = (this.v + this.f).toFixed(2);
                 drto = ((this.nt * 4)/100).toFixed(2);
             }
             else {
                 if (isNaN(this.v) && this.v == 0){
                     this.nt =  (this.f / 0.7).toFixed(2);
+                    drto = this.f;
                 }
                 else{
                     this.nt = (this.v / 0.3).toFixed(2);
