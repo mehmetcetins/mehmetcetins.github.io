@@ -128,7 +128,6 @@ var ders = new Vue({
                 $("input[type='text']").parent().parent().remove();
                 $($(".submit").parent().parent()).before(aps);
                 $("table tr").css("opacity","1");
-                $(".btn-info").prop("disabled",true);
                 $("input:not(.submit)").val("");
             }
         }
@@ -160,17 +159,23 @@ var ders = new Vue({
             this.final = b;
             this.v = this.ntf(this.v,this.items,0.3);
             this.f = this.ntf(this.f,this.items,0.7);
-            if(!(isNaN(this.v) && isNaN(this.f))){
+            drto = 0;
+            if(!(isNaN(this.v) && !isNaN(this.f)) && this.v == 0 && this.f == 0 ){
                 this.nt = (this.v + this.f).toFixed(2);
+                drto = ((this.nt * 4)/100).toFixed(2);
             }
             else {
-                if (isNaN(this.v))
-                    this.nt = this.f.toFixed(2);
-                else 
-                    this.nt = this.v.toFixed(2);
+                if (isNaN(this.v) && this.v == 0){
+                    this.nt =  (this.f / 0.7).toFixed(2);
+                }
+                else{
+                    this.nt = (this.v / 0.3).toFixed(2);
+                    drto = this.v;
+                }
             }
             this.hn();
-            this.dort = ((this.nt * 4)/100).toFixed(2);
+            this.dort = drto;
+            console.log(drto);
             $(document).scrollTop(0);
             return false;
         },
@@ -211,6 +216,7 @@ var ders = new Vue({
                 console.log(t);
                 
             }
+            console.log(k);
             return (t/k)*kts;
         },
         hn :function(){
